@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 
 public class InterfaceSelectionHandler : MonoBehaviour
 {
-    [SerializeField] GameObject firstSelected;
-
     private byte selectedImageAlpha = 128;
     private byte selectedFontAlpha = 255;
     private TMPro.FontStyles selectedFontStyle = TMPro.FontStyles.Bold;
@@ -15,14 +13,12 @@ public class InterfaceSelectionHandler : MonoBehaviour
     private byte deselectedFontAlpha = 128;
     private TMPro.FontStyles deselectedFontStyle = TMPro.FontStyles.Normal;
 
-    private void Start()
-    {
-        EventSystem.current.SetSelectedGameObject(this.firstSelected);
-    }
+    private GameObject currentSelectedSlider;
 
     //  Chamado quando o slider GANHA o foco de seleção:
     public void UpdateInterfaceOnSelect(BaseEventData eventData)
     {
+        this.currentSelectedSlider = EventSystem.current.currentSelectedGameObject;
         this.UpdateComponents(this.selectedImageAlpha, this.selectedFontAlpha, this.selectedFontStyle);
     }
 
@@ -39,5 +35,10 @@ public class InterfaceSelectionHandler : MonoBehaviour
         selectedSliderParent.GetComponentInChildren<Image>().color = new Color32(192, 192, 192, imageAlpha);
         selectedSliderParent.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, fontAlpha);
         selectedSliderParent.GetComponentInChildren<TextMeshProUGUI>().fontStyle = fontStyle;
+    }
+
+    public GameObject GetCurrentSliderSelected()
+    {
+        return this.currentSelectedSlider;
     }
 }
