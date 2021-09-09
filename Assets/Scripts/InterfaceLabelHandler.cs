@@ -11,12 +11,13 @@ public class InterfaceLabelHandler : MonoBehaviour
     [SerializeField] private Image colorIcon;
     private Color32[] yellowBlueColor = { new Color32(255, 255, 0, 192), new Color32(0, 0, 255, 192) };
 
-    [SerializeField] private Image tfaIcon;
+    [SerializeField] private Image tfStatusIcon;
     [SerializeField] private Sprite[] onOffSprites;
 
     [SerializeField] private Image uniformityIcon;
     [SerializeField] private Sprite[] highLowTexture;
 
+    //  Chamado pelo 'EventTrigger: On Value Changed' de cada Slider_X para alterar os Icons usados como legenda em 'Selection_Menu':
     public void UpdateInterfaceLabel(float sliderValue)
     {
         int sliderIndex = int.Parse(EventSystem.current.currentSelectedGameObject.name.Split('_')[1]);
@@ -30,7 +31,7 @@ public class InterfaceLabelHandler : MonoBehaviour
                 this.UpdateColorLabel((int)sliderValue);
                 break;
             case 3:
-                this.UpdateFacadeLabel((int)sliderValue);
+                this.UpdateTFStatusLabel((int)sliderValue);
                 break;
             case 4:
                 this.UpdateUniformityLabel((int)sliderValue);
@@ -38,6 +39,7 @@ public class InterfaceLabelHandler : MonoBehaviour
         }
     }
 
+    //  Altera aparência dos Icons que representam a intensidade da iluminação do cenário:
     private void UpdateIntensityLabel(int sliderValue)
     {
         foreach (Image icon in this.intensityIcons)
@@ -49,16 +51,19 @@ public class InterfaceLabelHandler : MonoBehaviour
         this.intensityIcons[sliderValue - 1].GetComponentInChildren<TextMeshProUGUI>().fontStyle = FontStyles.Bold;
     }
 
+    //  Altera aparência do Icon que representa a cor da iluminação do cenário:
     private void UpdateColorLabel(int sliderValue)
     {
         this.colorIcon.color = this.yellowBlueColor[sliderValue - 1];
     }
 
-    private void UpdateFacadeLabel(int sliderValue)
+    //  Altera aparência do Icon que representa o status da iluminação de árvores/fachadas do cenário:
+    private void UpdateTFStatusLabel(int sliderValue)
     {
-        this.tfaIcon.sprite = this.onOffSprites[sliderValue - 1];
+        this.tfStatusIcon.sprite = this.onOffSprites[sliderValue - 1];
     }
 
+    //  Altera aparência do Icon que representa a uniformidade da iluminação do cenário:
     private void UpdateUniformityLabel(int sliderValue)
     {
         this.uniformityIcon.sprite = this.highLowTexture[sliderValue - 1];

@@ -15,20 +15,20 @@ public class InterfaceSelectionHandler : MonoBehaviour
 
     private GameObject currentSelectedSlider;
 
-    //  Chamado quando o slider GANHA o foco de seleção:
+    //  Chamado pelo 'EventTrigger: Select' de cada 'Slider_X':
     public void UpdateInterfaceOnSelect(BaseEventData eventData)
     {
         this.currentSelectedSlider = EventSystem.current.currentSelectedGameObject;
         this.UpdateComponents(this.selectedImageAlpha, this.selectedFontAlpha, this.selectedFontStyle);
     }
 
-    //  Chamado quando o slider PERDE o foco de seleção:
+    //  Chamado pelo 'EventTrigger: Deselect' de cada 'Slider_X':
     public void UpdateInterfaceOnDeselect(BaseEventData eventData)
     {
         this.UpdateComponents(this.deselectedImageAlpha, this.deselectedFontAlpha, this.deselectedFontStyle);
     }
 
-    //  Muda os componentes pra alterar a aparencia dos 'Menu Items':
+    //  Altera aparência dos componentes de cada 'Menu Items > Item_X':
     private void UpdateComponents(byte imageAlpha, byte fontAlpha, TMPro.FontStyles fontStyle)
     {
         Transform selectedSliderParent = EventSystem.current.currentSelectedGameObject.transform.parent;
@@ -37,6 +37,7 @@ public class InterfaceSelectionHandler : MonoBehaviour
         selectedSliderParent.GetComponentInChildren<TextMeshProUGUI>().fontStyle = fontStyle;
     }
 
+    //  Referência para a Slider que está com o foco de seleção:
     public GameObject GetCurrentSliderSelected()
     {
         return this.currentSelectedSlider;

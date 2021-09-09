@@ -3,12 +3,13 @@
 public class CameraMovementHandler : MonoBehaviour
 {
     [SerializeField] [Range(0, 10f)] private float mouseSensitivity;
-    [SerializeField] [Range(0, 90f)] private float verticalViewLimitAngle;
+    [SerializeField] [Range(0, 90f)] private float viewLimitAngle;
 
     public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
     private RotationAxes axes = RotationAxes.MouseXAndY;
     private float rotationY = 0f;
 
+    //  Altera a rotação da câmera de acordo com a posição do mouse no cenário:
     private void Update()
     {
         if (axes == RotationAxes.MouseXAndY)
@@ -16,7 +17,7 @@ public class CameraMovementHandler : MonoBehaviour
             float rotationX = this.transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
 
             rotationY += Input.GetAxis("Mouse Y") * mouseSensitivity;
-            rotationY = Mathf.Clamp(rotationY, -verticalViewLimitAngle, verticalViewLimitAngle);
+            rotationY = Mathf.Clamp(rotationY, -viewLimitAngle, viewLimitAngle);
 
             this.transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
         }
@@ -27,7 +28,7 @@ public class CameraMovementHandler : MonoBehaviour
         else if (axes == RotationAxes.MouseY)
         {
             rotationY += Input.GetAxis("Mouse Y") * mouseSensitivity;
-            rotationY = Mathf.Clamp(rotationY, -verticalViewLimitAngle, verticalViewLimitAngle);
+            rotationY = Mathf.Clamp(rotationY, -viewLimitAngle, viewLimitAngle);
 
             this.transform.localEulerAngles = new Vector3(-rotationY, this.transform.localEulerAngles.y, 0);
         }

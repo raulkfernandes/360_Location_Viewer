@@ -1735,7 +1735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 2
-  verticalViewLimitAngle: 45
+  viewLimitAngle: 0
 --- !u!1 &968828887
 GameObject:
   m_ObjectHideFlags: 0
@@ -2893,7 +2893,7 @@ MonoBehaviour:
   - {fileID: 2027033580}
   - {fileID: 1907785805}
   colorIcon: {fileID: 39267135}
-  tfaIcon: {fileID: 855813047}
+  tfStatusIcon: {fileID: 855813047}
   onOffSprites:
   - {fileID: 21300000, guid: ab4c76d5ed161fc4db30397f6d0e17d3, type: 3}
   - {fileID: 21300000, guid: d6b5684130368c34fba0dd7f72d6adaa, type: 3}

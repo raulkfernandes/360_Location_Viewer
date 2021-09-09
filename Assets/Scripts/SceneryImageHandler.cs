@@ -10,19 +10,24 @@ public class SceneryImageHandler : MonoBehaviour
     private bool exceptionHandled = false;
 
     private Dictionary<int, string[]> imageHandler = new Dictionary<int, string[]>();
-    private string intensity, color, tfa, uniformity;
+    private string intensity, color, tfStatus, uniformity;
 
+    //  Define o estado inicial do cenário:
     private void Awake()
     {
-        this.InitializeImageHandler();
+        this.InitializeImageHandlerDictionary();
+        this.UpdateMaterialTexture(this.GetImagePathString());
         this.defaultRotation = this.sphere.transform.rotation;
     }
 
+    //  Redefine as informações do cenário para o estado inicial:
     private void OnApplicationQuit()
     {
-        this.insideOutMaterial.mainTexture = Resources.Load<Texture>("Images/" + this.GetInitialPathString());
+        this.SetInitialValues();
+        this.UpdateMaterialTexture(this.GetImagePathString());
     }
 
+    //  Chamado pelo 'EventTrigger: On Value Changed' de cada Slider_X para alterar string com caminho do arquivo e redefinir imagem usada no cenário:
     public void UpdateSceneryImage(float sliderValue)
     {
         int sliderIndex = int.Parse(EventSystem.current.currentSelectedGameObject.name.Split('_')[1]);
@@ -36,29 +41,32 @@ public class SceneryImageHandler : MonoBehaviour
                 this.color = this.imageHandler[sliderIndex][(int)sliderValue - 1];
                 break;
             case 3:
-                this.tfa = this.imageHandler[sliderIndex][(int)sliderValue - 1];
+                this.tfStatus = this.imageHandler[sliderIndex][(int)sliderValue - 1];
                 break;
             case 4:
                 this.uniformity = this.imageHandler[sliderIndex][(int)sliderValue - 1];
                 break;
         }
 
-        //Debug.Log(this.GetImagePathString());
+        Debug.Log(this.GetImagePathString());
         this.RotationExceptionHandler(this.GetImagePathString());
-        this.insideOutMaterial.mainTexture = Resources.Load<Texture>("Images/" + this.GetImagePathString());
+        this.UpdateMaterialTexture(this.GetImagePathString());
     }
 
+    //  Retorna a string com caminho do arquivo com os valores atuais definidos nos Sliders de 'Selection_Menu':
     public string GetImagePathString()
     {
-        return this.intensity + "_" + this.color + "_" + this.tfa + "_" + this.uniformity;
+        return this.intensity + "_" + this.color + "_" + this.tfStatus + "_" + this.uniformity;
     }
 
-    private string GetInitialPathString()
+    //  Atualiza imagem usada no cenário de acordo com string com caminho do arquivo passado:
+    private void UpdateMaterialTexture(string imagePath)
     {
-        return this.imageHandler[1][0] + "_" + this.imageHandler[2][0] + "_" + this.imageHandler[3][0] + "_" + this.imageHandler[4][0];
+        this.insideOutMaterial.mainTexture = Resources.Load<Texture>("Images/" + imagePath);
     }
 
-    private void InitializeImageHandler()
+    //  Inicializa o Dictionary com todos os valores previstos para os arquivos de imagem:
+    private void InitializeImageHandlerDictionary()
     {
         this.imageHandler.Add(1, new string[] { "2.5", "10", "20", "50" });
         this.imageHandler.Add(2, new string[] { "3000K", "6000K" });
@@ -68,17 +76,19 @@ public class SceneryImageHandler : MonoBehaviour
         this.SetInitialValues();
     }
 
+    //  Define valores iniciais para cada 'Slider_X':
     private void SetInitialValues()
     {
         this.intensity = this.imageHandler[1][0];
         this.color = this.imageHandler[2][0];
-        this.tfa = this.imageHandler[3][0];
+        this.tfStatus = this.imageHandler[3][0];
         this.uniformity = this.imageHandler[4][0];
     }
 
-    private void RotationExceptionHandler(string pathString)
+    //  Corrige o erro de rotação presente em duas imagens passadas verificadas no condicional:
+    private void RotationExceptionHandler(string imagePath)
     {
-        if ((pathString.Equals("10_3000K_OFF_LOW") || pathString.Equals("10_6000K_OFF_LOW")))
+        if ((imagePath.Equals("10_3000K_OFF_LOW") || imagePath.Equals("10_6000K_OFF_LOW")))
         {
             if (!this.exceptionHandled)
             {
