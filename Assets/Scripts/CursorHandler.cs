@@ -7,7 +7,7 @@ public class CursorHandler : MonoBehaviour
     [SerializeField] private Texture2D sceneryCursor;
     private Vector2 sceneryCursorHotspot;
 
-    private void Start()
+    private void Awake()
     {
         this.sceneryCursorHotspot = new Vector2(sceneryCursor.width / 2, sceneryCursor.height / 2);
         this.SetSceneryCursor();
