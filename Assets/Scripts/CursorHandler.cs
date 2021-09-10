@@ -8,7 +8,7 @@ public class CursorHandler : MonoBehaviour
     private Vector2 sceneryCursorHotspot;
 
     //  Altera o cursor padrão para indicar navegação no cenário:
-    private void Awake()
+    private void Start()
     {
         this.sceneryCursorHotspot = new Vector2(sceneryCursor.width / 2, sceneryCursor.height / 2);
         this.SetSceneryCursor();
@@ -23,7 +23,7 @@ public class CursorHandler : MonoBehaviour
     //  Chamado pelo 'EventTrigger: Pointer Exit' de 'Selection_Menu':
     public void SetSceneryCursor()
     {
-        Cursor.SetCursor(this.sceneryCursor, this.sceneryCursorHotspot, CursorMode.Auto);
+        Cursor.SetCursor(this.sceneryCursor, this.sceneryCursorHotspot, CursorMode.ForceSoftware);
     }
 
     //  Chamado pelo 'EventTrigger: Pointer Down' de 'Selection_Menu':

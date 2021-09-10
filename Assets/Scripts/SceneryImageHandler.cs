@@ -12,7 +12,7 @@ public class SceneryImageHandler : MonoBehaviour
     private Dictionary<int, string[]> imageHandler = new Dictionary<int, string[]>();
     private string intensity, color, tfStatus, uniformity;
 
-    //  Define o estado inicial do cenário:
+    //  Preenche o Dictionary e define estado inicial do cenário:
     private void Awake()
     {
         this.InitializeImageHandlerDictionary();
@@ -20,11 +20,24 @@ public class SceneryImageHandler : MonoBehaviour
         this.defaultRotation = this.sphere.transform.rotation;
     }
 
-    //  Redefine as informações do cenário para o estado inicial:
-    private void OnApplicationQuit()
+    //  Inicializa o Dictionary com todos os valores previstos para os arquivos de imagem:
+    private void InitializeImageHandlerDictionary()
     {
+        this.imageHandler.Add(1, new string[] { "2.5", "10", "20", "50" });
+        this.imageHandler.Add(2, new string[] { "3000K", "6000K" });
+        this.imageHandler.Add(3, new string[] { "OFF", "ON" });
+        this.imageHandler.Add(4, new string[] { "LOW", "HIGH" });
+
         this.SetInitialValues();
-        this.UpdateMaterialTexture(this.GetImagePathString());
+    }
+
+    //  Define valores iniciais para cada 'Slider_X':
+    private void SetInitialValues()
+    {
+        this.intensity = this.imageHandler[1][0];
+        this.color = this.imageHandler[2][0];
+        this.tfStatus = this.imageHandler[3][0];
+        this.uniformity = this.imageHandler[4][0];
     }
 
     //  Chamado pelo 'EventTrigger: On Value Changed' de cada Slider_X para alterar string com caminho do arquivo e redefinir imagem usada no cenário:
@@ -63,26 +76,6 @@ public class SceneryImageHandler : MonoBehaviour
     private void UpdateMaterialTexture(string imagePath)
     {
         this.insideOutMaterial.mainTexture = Resources.Load<Texture>("Images/" + imagePath);
-    }
-
-    //  Inicializa o Dictionary com todos os valores previstos para os arquivos de imagem:
-    private void InitializeImageHandlerDictionary()
-    {
-        this.imageHandler.Add(1, new string[] { "2.5", "10", "20", "50" });
-        this.imageHandler.Add(2, new string[] { "3000K", "6000K" });
-        this.imageHandler.Add(3, new string[] { "OFF", "ON" });
-        this.imageHandler.Add(4, new string[] { "LOW", "HIGH" });
-
-        this.SetInitialValues();
-    }
-
-    //  Define valores iniciais para cada 'Slider_X':
-    private void SetInitialValues()
-    {
-        this.intensity = this.imageHandler[1][0];
-        this.color = this.imageHandler[2][0];
-        this.tfStatus = this.imageHandler[3][0];
-        this.uniformity = this.imageHandler[4][0];
     }
 
     //  Corrige o erro de rotação presente em duas imagens passadas verificadas no condicional:

@@ -9,7 +9,7 @@ public class CameraMovementHandler : MonoBehaviour
     private RotationAxes axes = RotationAxes.MouseXAndY;
     private float rotationY = 0f;
 
-    //  Altera a rotação da câmera de acordo com a posição do mouse no cenário:
+    //  Altera rotação da camera de acordo com posição do mouse no cenário:
     private void Update()
     {
         if (axes == RotationAxes.MouseXAndY)
