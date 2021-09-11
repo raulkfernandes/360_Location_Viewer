@@ -9,7 +9,7 @@ public class InterfaceLabelHandler : MonoBehaviour
     private Color32[] selectionColor = { new Color32(128, 128, 128, 128), new Color32(192, 192, 192, 128) };
 
     [SerializeField] private Image colorIcon;
-    private Color32[] yellowBlueColor = { new Color32(255, 255, 0, 192), new Color32(0, 0, 255, 192) };
+    private Color32[] yellowBlueColor = { new Color32(192, 192, 0, 255), new Color32(0, 0, 192, 255) };
 
     [SerializeField] private Image tfStatusIcon;
     [SerializeField] private Sprite[] onOffSprites;

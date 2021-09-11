@@ -6,11 +6,12 @@ public class SceneryImageHandler : MonoBehaviour
 {
     [SerializeField] private Material insideOutMaterial;
     [SerializeField] private GameObject sphere;
-    private Quaternion defaultRotation;
-    private bool exceptionHandled = false;
 
     private Dictionary<int, string[]> imageHandler = new Dictionary<int, string[]>();
     private string intensity, color, tfStatus, uniformity;
+
+    private Quaternion defaultRotation;
+    private bool exceptionHandled = false;
 
     //  Preenche o Dictionary e define estado inicial do cenário:
     private void Awake()
