@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class IntroductionPanelHandler : MonoBehaviour
 {
+    [SerializeField] private CursorHandler cursorHandler;
     [SerializeField] private CameraMovementHandler cameraMovementHandler;
     [SerializeField] private Image menuNavigationIcon;
     [SerializeField] private Sprite[] menuNavigationSprites;
@@ -11,7 +12,7 @@ public class IntroductionPanelHandler : MonoBehaviour
     private bool isAnimationRunning = true;
     private bool hasSpriteChanged = false;
 
-    //  Trava a movimentação da câmera e a posição do Cursor:
+    //  Trava a movimentação da Câmera e desabilita Cursor:
     private void Awake()
     {
         this.SetCameraMovement(false);
@@ -23,11 +24,10 @@ public class IntroductionPanelHandler : MonoBehaviour
         StartCoroutine(this.ToggleMenuNavigationSprites());
     }
 
-    //  Mantém o Cursor travado durante a animação:
-    private void FixedUpdate()
+    //  Mantém a movimentação da Câmera travada e Cursor desabilitado durante animação:
+    private void Update()
     {
-        if (this.isAnimationRunning)
-            Cursor.lockState = CursorLockMode.Locked;
+        this.SetCameraMovement(false);
     }
 
     //  Enquanto a animaçao estiver ativa, alterna as sprites a cada 1s:
@@ -58,9 +58,11 @@ public class IntroductionPanelHandler : MonoBehaviour
     //  Habilita/Desabilita o Script de movimentação de câmera Trava/Libera o Cursor na cena:
     private void SetCameraMovement(bool isEnabled)
     {
-        this.cameraMovementHandler.enabled = isEnabled;
         CursorLockMode lockMode = isEnabled ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.lockState = lockMode;
+        Cursor.visible = isEnabled;
+        this.cameraMovementHandler.enabled = isEnabled;
+        this.cursorHandler.SetSceneryCursor();
     }
 
     //  Modifica o status da animação e desativa este Script:

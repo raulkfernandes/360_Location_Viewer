@@ -540,6 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f790f41d00575ac469fa06a37672b568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cursorHandler: {fileID: 1301594787}
   cameraMovementHandler: {fileID: 963194229}
   menuNavigationIcon: {fileID: 128237682}
   menuNavigationSprites:
