@@ -4,33 +4,31 @@ using UnityEngine.UI;
 
 public class IntroductionPanelHandler : MonoBehaviour
 {
-    [SerializeField] private CursorHandler cursorHandler;
-    [SerializeField] private CameraMovementHandler cameraMovementHandler;
     [SerializeField] private Image menuNavigationIcon;
     [SerializeField] private Sprite[] menuNavigationSprites;
+
+    [SerializeField] private CameraMovementHandler cameraMovementHandler;
+    [SerializeField] private GameObject selectionMenu;
+    private CursorHandler cursorHandler;
 
     private bool isAnimationRunning = true;
     private bool hasSpriteChanged = false;
 
-    //  Trava a movimentação da Câmera e desabilita Cursor:
+    //  Desabilita 'SelectionMenu', Cursor e Movimentação da Câmera:
     private void Awake()
     {
+        this.cursorHandler = this.selectionMenu.GetComponent<CursorHandler>();
+        this.selectionMenu.SetActive(false);
         this.SetCameraMovement(false);
     }
 
-    //  Inicia Coroutine para alternar sprites de Menu:
+    //  Inicia Coroutine para alternar Sprites de Menu:
     private void Start()
     {
         StartCoroutine(this.ToggleMenuNavigationSprites());
     }
 
-    //  Mantém a movimentação da Câmera travada e Cursor desabilitado durante animação:
-    private void Update()
-    {
-        this.SetCameraMovement(false);
-    }
-
-    //  Enquanto a animaçao estiver ativa, alterna as sprites a cada 1s:
+    //  Enquanto 'AnimationClip' estiver ativa, alterna Sprites a cada 1s:
     private IEnumerator ToggleMenuNavigationSprites()
     {
         while (this.isAnimationRunning)
@@ -48,27 +46,33 @@ public class IntroductionPanelHandler : MonoBehaviour
         this.hasSpriteChanged = !this.hasSpriteChanged;
     }
 
-    //  Chamada ao final do AnimationClip para encerrar a animação e liberar a cena:
+    //  Chamado ao final do 'AnimationClip' para encerrar animação e liberar cena:
     public void EnableCameraMovement()
     {
+        this.EnableSelectionMenu();
         this.SetCameraMovement(true);
-        this.DisableAnimation();
     }
 
-    //  Habilita/Desabilita o Script de movimentação de câmera Trava/Libera o Cursor na cena:
+    //  Habilita/Desabilita Cursor e Script de movimentação de câmera na cena:
     private void SetCameraMovement(bool isEnabled)
     {
-        CursorLockMode lockMode = isEnabled ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.lockState = lockMode;
-        Cursor.visible = isEnabled;
+        this.SetCursorState(isEnabled);
         this.cameraMovementHandler.enabled = isEnabled;
-        this.cursorHandler.SetSceneryCursor();
     }
 
-    //  Modifica o status da animação e desativa este Script:
-    private void DisableAnimation()
+    //  Altera configurações do Cursor:
+    private void SetCursorState(bool isEnabled)
     {
-        this.isAnimationRunning = false;
-        this.enabled = false;
+        Cursor.lockState = isEnabled ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = isEnabled;
+        if (isEnabled)
+            this.cursorHandler.SetSceneryCursor();
+    }
+
+    //  Habilita 'Selection_Menu' e Desabilita 'Introduction_Panel':
+    private void EnableSelectionMenu()
+    {
+        this.selectionMenu.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 }

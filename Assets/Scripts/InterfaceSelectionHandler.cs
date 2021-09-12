@@ -15,6 +15,11 @@ public class InterfaceSelectionHandler : MonoBehaviour
 
     private GameObject currentSelectedSlider;
 
+    private void Awake()
+    {
+        this.UpdateInterfaceOnSelect(null);
+    }
+
     //  Chamado pelo 'EventTrigger: Select' de cada 'Slider_X':
     public void UpdateInterfaceOnSelect(BaseEventData eventData)
     {

@@ -4,13 +4,13 @@ using UnityEngine.EventSystems;
 public class CursorHandler : MonoBehaviour
 {
     [SerializeField] InterfaceSelectionHandler interfaceSelectionHandler;
-    [SerializeField] private Texture2D sceneryCursor;
+    [SerializeField] private Texture2D sceneryCursorTexture;
     private Vector2 sceneryCursorHotspot;
 
     //  Altera o cursor padrão para indicar navegação no cenário:
-    private void Start()
+    private void Awake()
     {
-        this.sceneryCursorHotspot = new Vector2(sceneryCursor.width / 2, sceneryCursor.height / 2);
+        this.sceneryCursorHotspot = new Vector2(sceneryCursorTexture.width / 2, sceneryCursorTexture.height / 2);
         this.SetSceneryCursor();
     }
 
@@ -23,7 +23,7 @@ public class CursorHandler : MonoBehaviour
     //  Chamado pelo 'EventTrigger: Pointer Exit' de 'Selection_Menu':
     public void SetSceneryCursor()
     {
-        Cursor.SetCursor(this.sceneryCursor, this.sceneryCursorHotspot, CursorMode.ForceSoftware);
+        Cursor.SetCursor(this.sceneryCursorTexture, this.sceneryCursorHotspot, CursorMode.ForceSoftware);
     }
 
     //  Chamado pelo 'EventTrigger: Pointer Down' de 'Selection_Menu':
