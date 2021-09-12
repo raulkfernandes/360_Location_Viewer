@@ -11,6 +11,7 @@ public class CursorHandler : MonoBehaviour
     private void Awake()
     {
         this.sceneryCursorHotspot = new Vector2(sceneryCursorTexture.width / 2, sceneryCursorTexture.height / 2);
+        this.SetSceneryCursor();
     }
 
     //  Chamado pelo 'EventTrigger: Pointer Enter' de 'Selection_Menu':

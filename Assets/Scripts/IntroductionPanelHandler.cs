@@ -18,8 +18,8 @@ public class IntroductionPanelHandler : MonoBehaviour
     private void Awake()
     {
         this.cursorHandler = this.selectionMenu.GetComponent<CursorHandler>();
-        this.selectionMenu.SetActive(false);
         this.SetCameraMovement(false);
+        this.DisableSelectionMenu();
     }
 
     //  Inicia Coroutine para alternar Sprites de Menu:
@@ -67,6 +67,12 @@ public class IntroductionPanelHandler : MonoBehaviour
         Cursor.visible = isEnabled;
         if (isEnabled)
             this.cursorHandler.SetSceneryCursor();
+    }
+
+    //  Desabilita 'Selection_Menu'
+    private void DisableSelectionMenu()
+    {
+        this.selectionMenu.SetActive(false);
     }
 
     //  Habilita 'Selection_Menu' e Desabilita 'Introduction_Panel':
