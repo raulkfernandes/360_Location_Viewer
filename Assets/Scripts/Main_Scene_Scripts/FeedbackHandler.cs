@@ -22,13 +22,13 @@ public class FeedbackHandler : MonoBehaviour
     //  Chamado pelo 'Menu_Button' para enviar informações ao GoogleForms fornecido:
     public void SendFeedback()
     {
-        if (this.formDataHandler != null)
+        if (this.formDataHandler == null)
         {
-            StartCoroutine(SendDataToGForm(this.formDataHandler.GetFormData(), this.sceneryImageHandler.GetImagePathString()));
+            Debug.Log("Formulário vazio!");
         }
         else
         {
-            Debug.Log("Formulário vazio!");
+            StartCoroutine(SendDataToGForm(this.formDataHandler.GetFormData(), this.sceneryImageHandler.GetImagePathString()));
         }
     }
 

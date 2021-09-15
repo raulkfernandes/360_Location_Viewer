@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
@@ -9,7 +10,8 @@ public class FormSelectionHandler : MonoBehaviour
     //  Chamado pelo 'EventTrigger: Pointer Down' de 'Introduction_Form':
     public void ResetObjectSelection()
     {
-        if (EventSystem.current.currentSelectedGameObject == null || EventSystem.current.currentSelectedGameObject.name == "Form_Button")
+        GameObject currentSelected = EventSystem.current.currentSelectedGameObject;
+        if (currentSelected == null || currentSelected.GetComponent<Button>().IsActive())
         {
             if (this.inputField.text.Trim().Equals("") || this.inputField.text.Trim().Equals(null))
             {

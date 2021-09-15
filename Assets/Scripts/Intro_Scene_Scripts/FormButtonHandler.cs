@@ -12,6 +12,7 @@ public class FormButtonHandler : MonoBehaviour
     [SerializeField] private GameObject alertPanel;
 
     private FormDataHandler formDataHandler;
+    private bool isAlertActive = false;
 
     private void Awake()
     {
@@ -21,23 +22,33 @@ public class FormButtonHandler : MonoBehaviour
     //  Chamado pelo botão de 'Introduction_Form' para Salvar valores do formulário e mudar de cena:
     public void StartMainScene()
     {
-        if (this.GetFormValues()[0].Trim().Equals("") || this.GetFormValues()[0].Trim().Equals(null))
+        if (!this.isAlertActive)
         {
-            StartCoroutine(this.ToogleAlertPanel());
-        }
-        else
-        {
-            this.formDataHandler.SetFormData(this.GetFormValues());
-            SceneManager.LoadScene("Main_Scene");
+            string inputFieldValue = this.GetFormValues()[0].Trim();
+            if (inputFieldValue.Equals("") || inputFieldValue.Equals(null))
+            {
+                StartCoroutine(this.ToogleAlertPanel());
+            }
+            else
+            {
+                this.formDataHandler.SetFormData(this.GetFormValues());
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
         }
     }
 
     //  Chamado caso o 'Input_Field' não tiver sido preenchido, exibindo alerta:
     private IEnumerator ToogleAlertPanel()
     {
-        this.alertPanel.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        this.alertPanel.SetActive(false);
+        this.SetAlertActive(true);
+        yield return new WaitForSeconds(1.25f);
+        this.SetAlertActive(false);
+    }
+
+    private void SetAlertActive(bool isAlertActive)
+    {
+        this.isAlertActive = isAlertActive;
+        this.alertPanel.SetActive(isAlertActive);
     }
 
     //  Retorna os valores dos 'Form_Items':
