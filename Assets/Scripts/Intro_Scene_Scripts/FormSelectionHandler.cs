@@ -11,9 +11,11 @@ public class FormSelectionHandler : MonoBehaviour
     public void ResetObjectSelection()
     {
         GameObject currentSelected = EventSystem.current.currentSelectedGameObject;
+        string inputFieldValue = this.inputField.text.Trim();
+
         if (currentSelected == null || currentSelected.GetComponent<Button>().IsActive())
         {
-            if (this.inputField.text.Trim().Equals("") || this.inputField.text.Trim().Equals(null))
+            if (inputFieldValue.Equals("") || inputFieldValue.Equals(null))
             {
                 EventSystem.current.SetSelectedGameObject(this.inputField.gameObject);
             }
